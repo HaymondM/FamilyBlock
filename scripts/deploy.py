@@ -52,4 +52,11 @@ my_address = "0x671c6c1082EE9dBef67c3482509D4d8eF18a0B46"
 # change this private_key. This is for a local blockchain
 private_key = "0xae2b8ead34c7552317587436ff74200445ccbe2296ec2861e989086e1be87538"
 
-# FamilyBlock =
+
+# create the contract
+FamilyBlock = Web3.eth.contract(abi=abi, bytecode=bytecode)
+
+# get most recent transaction (nonce)
+
+nonce = Web3.eth.getTransactionCount(my_address)
+Web3.eth._get_accounts

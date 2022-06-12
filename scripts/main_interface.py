@@ -1,15 +1,12 @@
 from deploy import connection
+from accountinterface import accountWindow
 #import sys
 import tkinter as tk
 
 #sys.path.insert(0, './scripts')
 
 
-def connect_to_block():
-    INPUT = T.get("1.0", "end-1c")
-    print(connection(INPUT))
-
-
+# Set Up Main window
 window_width = 600
 window_height = 400
 
@@ -17,6 +14,7 @@ root = tk.Tk()
 
 root.title('Family Block')
 root.config(bg='#adbce6')
+
 # get the screen dimension
 screen_width = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
@@ -33,6 +31,103 @@ root.resizable(False, False)
 
 # set the icon
 root.iconbitmap('.\\assets\FamilyBlock.ico')
+# Set Up Main window
+
+
+def connect_to_block():
+    INPUT = T.get("1.0", "end-1c")
+
+    res = connection(INPUT)
+
+    print(res)
+    if res == True:
+        root.destroy()
+        accountWindow()
+
+    else:
+        openFailWindow()
+
+
+def openFailWindow():
+
+    # Make a new window on top of root window
+    failWindow = tk.Toplevel(root)
+
+    # sets the title
+    failWindow.title('Family Block')
+    failWindow.config(bg='#adbce6')
+
+    # sets the geometry
+
+    # Set Up Main window
+    Nwindow_width = 300
+    Nwindow_height = 45
+    screen_width = failWindow.winfo_screenwidth()
+    screen_height = failWindow.winfo_screenheight()
+
+    center_x = int(screen_width/2 - Nwindow_width / 2)
+    center_y = int(screen_height/2 - Nwindow_height / 2)
+
+    # set the position of the window to the center of the screen
+    failWindow.geometry(
+        f'{Nwindow_width }x{Nwindow_height}+{center_x}+{center_y}')
+
+    tk.Label(failWindow,
+             text="Failed to connect to the BlockChain").pack()
+
+    # set the window to not be resizable
+    failWindow.resizable(False, False)
+
+    # set the icon
+    failWindow.iconbitmap('.\\assets\FamilyBlock.ico')
+
+
+def openMainWindow():
+    # Make a new window on top of root window
+    failWindow = tk.Toplevel(root)
+
+    # sets the title
+    failWindow.title('Family Block')
+    failWindow.config(bg='#adbce6')
+
+    # sets the geometry
+
+    # Set Up Main window
+    Nwindow_width = 300
+    Nwindow_height = 45
+    screen_width = failWindow.winfo_screenwidth()
+    screen_height = failWindow.winfo_screenheight()
+
+    center_x = int(screen_width/2 - Nwindow_width / 2)
+    center_y = int(screen_height/2 - Nwindow_height / 2)
+
+    # set the position of the window to the center of the screen
+    failWindow.geometry(
+        f'{Nwindow_width }x{Nwindow_height}+{center_x}+{center_y}')
+
+    # A Label widget to show in toplevel
+    tk.Label(failWindow,
+             text="Failed to connect to the BlockChain").pack()
+
+    # set the window to not be resizable
+    failWindow.resizable(False, False)
+
+    # set the icon
+    failWindow.iconbitmap('.\\assets\FamilyBlock.ico')
+
+
+# set up buttons
+# Create button for next text.
+button_connect = tk.Button(
+    root, text="Connect", command=lambda: connect_to_block())
+
+
+exit_button = tk.Button(
+    root,
+    text="Exit",
+    command=lambda: root.quit()
+).place(x=265, y=350)
+
 
 # Set up text
 # Create label
@@ -43,21 +138,10 @@ l.config(font=("Courier", 14))
 
 address_text = "HTTP://127.0.0.1:7545"
 
-# Create button for next text.
-button_connect = tk.Button(
-    root, text="Connect", command=lambda: connect_to_block())
 
 l.pack()
 button_connect.pack()
 T.pack()
 T.insert(tk.END, address_text)
-
-# set up buttons
-exit_button = tk.Button(
-    root,
-    text="Exit",
-    command=lambda: root.quit()
-).place(x=265, y=350)
-
 
 root.mainloop()
