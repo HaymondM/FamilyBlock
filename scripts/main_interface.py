@@ -126,7 +126,7 @@ exit_button = tk.Button(
     root,
     text="Exit",
     command=lambda: root.quit()
-).place(x=265, y=350)
+).place(relx=0.5, rely=0.9, anchor='n')
 
 
 # Set up text

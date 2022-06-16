@@ -45,18 +45,26 @@ def connection(address):
     return isConnected
 
 
+class blockactions:
+    def __init__(self, my_address, private_key):
+        self.my_address = my_address
+        self.private_key = private_key
+        self.chainId = 1337
+
+
 #w3 = Web3(Web3.HTTPProvider(address))
-chainid = 1337
+#chainid = 1337
 my_address = "0x671c6c1082EE9dBef67c3482509D4d8eF18a0B46"
 # os.getenv("PRIVATE_KEY")
 # change this private_key. This is for a local blockchain
 private_key = "0xae2b8ead34c7552317587436ff74200445ccbe2296ec2861e989086e1be87538"
 
 
-# create the contract
-FamilyBlock = Web3.eth.contract(abi=abi, bytecode=bytecode)
+def adddata(self):
+    # create the contract
+    FamilyBlock = Web3.eth.contract(abi=abi, bytecode=bytecode)
 
-# get most recent transaction (nonce)
+    # get most recent transaction (nonce)
 
-nonce = Web3.eth.getTransactionCount(my_address)
-Web3.eth._get_accounts
+    nonce = Web3.eth.getTransactionCount(my_address)
+    Web3.eth._get_accounts
