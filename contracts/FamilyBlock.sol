@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.6.0;
+pragma experimental ABIEncoderV2;
 
 contract FamilyBlock {
     struct People {
         string name;
-        int256 age;
+        string age;
         string dob;
         string birthPlace;
         int256 id;
@@ -18,7 +19,7 @@ contract FamilyBlock {
 
     function addPerson(
         string memory _name,
-        int256 _age,
+        string memory _age,
         string memory _dob,
         string memory _birthPlace,
         int256 _id
@@ -27,5 +28,7 @@ contract FamilyBlock {
         nameToid[_name] = _id;
     }
 
-    function getTree() public {}
+    function getTree() external view returns (People[] memory) {
+        return people;
+    }
 }

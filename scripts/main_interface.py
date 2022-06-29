@@ -1,4 +1,5 @@
-from deploy import connection
+#from deploy import connection
+from deploy import blockactions
 from accountinterface import accountWindow
 #import sys
 import tkinter as tk
@@ -36,13 +37,14 @@ root.iconbitmap('.\\assets\FamilyBlock.ico')
 
 def connect_to_block():
     INPUT = T.get("1.0", "end-1c")
+    mainblock = blockactions(INPUT)
 
-    res = connection(INPUT)
+    res = mainblock.connection(INPUT)
 
     print(res)
     if res == True:
         root.destroy()
-        accountWindow()
+        accountWindow(mainblock)
 
     else:
         openFailWindow()
