@@ -63,7 +63,6 @@ class blockactions:
         #self.w3 = Web3(Web3.HTTPProvider(self.address))
 
     def adddata(self, Inna, Inag, Inda, Inba):
-        print(self.my_address)
 
         #w3 = Web3(Web3.HTTPProvider(self.my_address))
         # create/build the contract
@@ -71,14 +70,15 @@ class blockactions:
             abi=self.abi, bytecode=self.bytecode)
         nonce = self.w3.eth.getTransactionCount(self.my_address)
         transaction = FamilyBlock.constructor().buildTransaction(
-            {"chainId": self.chainId, "from": self.address, "nonce": nonce}
+            {"gasPrice": self.w3.eth.gas_price, "chainId": self.chainId,
+                "from": self.my_address, "nonce": nonce}
         )
         # sign
         signed_txn = self.w3.eth.account.sign_transaction(
             transaction, private_key=self.private_key)
         # send
         print("Deploying contract...")
-        tx_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
+        tx_hash = self.w3.eth.send_raw_transaction(signed_txn.rawTransaction)
         # wait for it to be recived
         tx_receipt = self.w3.eth.wait_for_transaction_receipt(tx_hash)
         print("Deployed!")
@@ -86,9 +86,11 @@ class blockactions:
         familyblock = self.w3.eth.contract(
             address=tx_receipt.contractAddress, abi=self.abi)
         # store the data
+        # print(type(Inna))
         print("Updating contract...")
-        store_transaction = familyblock.functions.addPerson(Inna, Inag, Inda, Inba, nonce+1).buildTransaction({
-            {"chainId": self.chain_id, "from": self.address, "nonce": nonce + 1}
+        store_transaction = familyblock.functions.addPerson(Inna, Inag, Inda, Inba, nonce + 1).buildTransaction({
+            "gasPrice": self.w3.eth.gas_price, "chainId": self.chainId,
+            "from": self.my_address, "nonce": nonce + 1
         })
         signed_addperson_txn = self.w3.eth.account.sign_transaction(
             store_transaction, private_key=self.private_key)

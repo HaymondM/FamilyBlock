@@ -1,14 +1,12 @@
 #import sys
 import tkinter as tk
 from tkinter import messagebox
-#from deploy import blockactions
-from enterinfo import infoWindow
-
+from deploy import blockactions
 
 #sys.path.insert(0, './scripts')
 
 
-def accountWindow(mainblock):
+def accountWindow():
     # Set Up Main window
     window_width = 600
     window_height = 400
@@ -19,23 +17,12 @@ def accountWindow(mainblock):
         # print(aa)
         aaa = userInaa.get()
         pkk = userInpk.get()
-        mainblock.addmaindata(aaa, pkk, 1337)
+        mainblock.my_address = aaa
+        mainblock.private_key = pkk
         print(mainblock.my_address)
         print(mainblock.private_key)
         userInpk.delete(0, tk.END)
         return messagebox.showinfo('FamilyBlock', "ACCOUNT ADDRESS and PRIVATE KEY added")
-
-    def addfaminfo():
-        # print(aa)
-        Inna = userInna.get()
-        Inag = userInag.get()
-        Inda = userInda.get()
-        Inba = userInba.get()
-        #Infa = userInfa.get()
-        #print(Inna, Inag)
-
-        mainblock.adddata(Inna, Inag, Inda, Inba)
-        return messagebox.showinfo('FamilyBlock', "Personaded added")
 
     root.title('Family Block')
     root.config(bg='#adbce6')
@@ -76,46 +63,10 @@ def accountWindow(mainblock):
     userInpk = tk.Entry(root, textvariable=txtVarpk, width=50)
     userInpk.place(relx=0.5, rely=0.2, anchor='n')
 
-    # start family inputs
-    pk = tk.Label(root, text="Name")
-    pk.place(relx=0.75, rely=0.4, anchor='s')
-
-    txtVarna = tk.StringVar(root)
-    userInna = tk.Entry(root, textvariable=txtVarna, width=50)
-    userInna.place(relx=0.75, rely=0.4, anchor='n')
-
-    pk = tk.Label(root, text="Age")
-    pk.place(relx=0.75, rely=0.5, anchor='s')
-
-    txtVarag = tk.StringVar(root)
-    userInag = tk.Entry(root, textvariable=txtVarag, width=50)
-    userInag.place(relx=0.75, rely=0.5, anchor='n')
-
-    pk = tk.Label(root, text="Date of birth")
-    pk.place(relx=0.75, rely=0.6, anchor='s')
-
-    txtVarda = tk.StringVar(root)
-    userInda = tk.Entry(root, textvariable=txtVarda, width=50)
-    userInda.place(relx=0.75, rely=0.6, anchor='n')
-
-    pk = tk.Label(root, text="BirthPlace")
-    pk.place(relx=0.75, rely=0.7, anchor='s')
-
-    txtVarba = tk.StringVar(root)
-    userInba = tk.Entry(root, textvariable=txtVarba, width=50)
-    userInba.place(relx=0.75, rely=0.7, anchor='n')
-
-    #pk = tk.Label(root, text="Family ID")
-    #pk.place(relx=0.75, rely=0.8, anchor='s')
-
-    #txtVarfa = tk.StringVar(root)
-    #userInfa = tk.Entry(root, textvariable=txtVarfa, width=50)
-    #userInfa.place(relx=0.75, rely=0.8, anchor='n')
-
-    # End Family ID
-
     aainfo = userInaa.get()
     pkinfo = userInpk.get()
+
+    mainblock = blockactions(aainfo, pkinfo)
 
     # set up buttons
 
@@ -124,18 +75,6 @@ def accountWindow(mainblock):
         text="Add",
         command=lambda: addinfo()
     ).place(relx=0.5, rely=0.25, anchor='n')
-
-    tk.Button(
-        root,
-        text="Enter info",
-        command=lambda: addfaminfo()
-    ).place(relx=0.75, rely=0.9, anchor='n')
-
-    tk.Button(
-        root,
-        text="Retrieve a family tree/persons info",
-        command=lambda: root.quit()
-    ).place(relx=0.25, rely=0.5, anchor='n')
 
     tk.Button(
         root,
