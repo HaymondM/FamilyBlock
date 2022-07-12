@@ -87,8 +87,23 @@ class blockactions:
             address=tx_receipt.contractAddress, abi=self.abi)
         # store the data
         # print(type(Inna))
+        ######
         print("Updating contract...")
-        store_transaction = familyblock.functions.addPerson(Inna, Inag, Inda, Inba, nonce + 1).buildTransaction({
+        store_transaction = familyblock.functions.createFamilyBlockContract().buildTransaction({
+            "gasPrice": self.w3.eth.gas_price, "chainId": self.chainId,
+            "from": self.my_address, "nonce": nonce + 1
+        })
+        signed_addperson_txn = self.w3.eth.account.sign_transaction(
+            store_transaction, private_key=self.private_key)
+        send_addperson_tx = self.w3.eth.send_raw_transaction(
+            signed_addperson_txn.rawTransaction)
+        # wait for it to be recived
+        tx_receipt = self.w3.eth.wait_for_transaction_receipt(
+            send_addperson_tx)
+        print("Updated!")
+        ######
+        print("Updating contract...")
+        store_transaction = familyblock.functions.addPerson(Inna, Inag, Inda, Inba, nonce).buildTransaction({
             "gasPrice": self.w3.eth.gas_price, "chainId": self.chainId,
             "from": self.my_address, "nonce": nonce + 1
         })

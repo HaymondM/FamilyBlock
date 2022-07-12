@@ -4,6 +4,8 @@ pragma solidity ^0.6.0;
 pragma experimental ABIEncoderV2;
 
 contract FamilyBlock {
+    int256 age;
+
     struct People {
         string name;
         string age;
@@ -28,7 +30,7 @@ contract FamilyBlock {
         nameToid[_name] = _id;
     }
 
-    function getTree() external view returns (People[] memory) {
-        return people;
+    function getTree() external view returns (int256) {
+        return age;
     }
 }
