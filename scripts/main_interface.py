@@ -29,7 +29,6 @@ root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
 
 # set the window to not be resizable
 root.resizable(False, False)
-
 # set the icon
 root.iconbitmap('.\\assets\FamilyBlock.ico')
 # Set Up Main window

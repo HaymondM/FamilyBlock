@@ -2,7 +2,8 @@
 import tkinter as tk
 from tkinter import messagebox
 #from deploy import blockactions
-from enterinfo import infoWindow
+#from enterinfo import infoWindow
+from familytree import familyTree
 
 
 #sys.path.insert(0, './scripts')
@@ -31,11 +32,42 @@ def accountWindow(mainblock):
         Inag = userInag.get()
         Inda = userInda.get()
         Inba = userInba.get()
+        Inco1 = userInco1.get()
+        Inco2 = userInco2.get()
         #Infa = userInfa.get()
         #print(Inna, Inag)
 
-        mainblock.adddata(Inna, Inag, Inda, Inba)
-        return messagebox.showinfo('FamilyBlock', "Personaded added")
+        personcon = mainblock.adddata(Inna, Inag, Inda, Inba, Inco1, Inco2)
+        return messagebox.showinfo('FamilyBlock', f"Here is the contract number of the person: {personcon}")
+
+    def getfaminfo():
+        # print(aa)
+        userIncoo = userInco.get()
+
+        person1 = mainblock.getdata(userIncoo)
+        if person1[0][5] or person1[0][6] != 'N/A':  # has parent info
+            p2con = person1[0][5]
+            p3con = person1[0][6]
+            person2 = mainblock.getdata(p2con)
+            person3 = mainblock.getdata(p3con)
+            print('here1')
+            if person2[0][5] or person2[0][6] != 'N/A':  # has parent info
+                p4con = person2[0][5]
+                p5con = person2[0][6]
+                print(person2[0][0])
+                print(p5con)
+                person4 = mainblock.getdata(p4con)
+                person5 = mainblock.getdata(p5con)
+                print('here2')
+            if person3[0][5] or person3[0][6] != 'N/A':  # has parent info
+                p6con = person3[0][5]
+                p7con = person3[0][6]
+                person6 = mainblock.getdata(p6con)
+                person7 = mainblock.getdata(p7con)
+
+        familyTree(mainblock, person1, person2, person3,
+                   person4, person5, person6, person7)
+        # return messagebox.showinfo('FamilyBlock', f"{persontree}")
 
     root.title('Family Block')
     root.config(bg='#adbce6')
@@ -78,32 +110,54 @@ def accountWindow(mainblock):
 
     # start family inputs
     pk = tk.Label(root, text="Name")
-    pk.place(relx=0.75, rely=0.4, anchor='s')
+    pk.place(relx=0.75, rely=0.35, anchor='s')
 
     txtVarna = tk.StringVar(root)
     userInna = tk.Entry(root, textvariable=txtVarna, width=50)
-    userInna.place(relx=0.75, rely=0.4, anchor='n')
+    userInna.place(relx=0.75, rely=0.35, anchor='n')
 
     pk = tk.Label(root, text="Age")
-    pk.place(relx=0.75, rely=0.5, anchor='s')
+    pk.place(relx=0.75, rely=0.45, anchor='s')
 
     txtVarag = tk.StringVar(root)
     userInag = tk.Entry(root, textvariable=txtVarag, width=50)
-    userInag.place(relx=0.75, rely=0.5, anchor='n')
+    userInag.place(relx=0.75, rely=0.45, anchor='n')
 
     pk = tk.Label(root, text="Date of birth")
-    pk.place(relx=0.75, rely=0.6, anchor='s')
+    pk.place(relx=0.75, rely=0.55, anchor='s')
 
     txtVarda = tk.StringVar(root)
     userInda = tk.Entry(root, textvariable=txtVarda, width=50)
-    userInda.place(relx=0.75, rely=0.6, anchor='n')
+    userInda.place(relx=0.75, rely=0.55, anchor='n')
 
     pk = tk.Label(root, text="BirthPlace")
-    pk.place(relx=0.75, rely=0.7, anchor='s')
+    pk.place(relx=0.75, rely=0.65, anchor='s')
 
     txtVarba = tk.StringVar(root)
     userInba = tk.Entry(root, textvariable=txtVarba, width=50)
-    userInba.place(relx=0.75, rely=0.7, anchor='n')
+    userInba.place(relx=0.75, rely=0.65, anchor='n')
+
+    pk = tk.Label(root, text="Contract # of parent")
+    pk.place(relx=0.75, rely=0.75, anchor='s')
+
+    txtVarco1 = tk.StringVar(root)
+    userInco1 = tk.Entry(root, textvariable=txtVarco1, width=50)
+    userInco1.place(relx=0.75, rely=0.75, anchor='n')
+
+    pk = tk.Label(root, text="Contract # of parent")
+    pk.place(relx=0.75, rely=0.85, anchor='s')
+
+    txtVarco2 = tk.StringVar(root)
+    userInco2 = tk.Entry(root, textvariable=txtVarco2, width=50)
+    userInco2.place(relx=0.75, rely=0.85, anchor='n')
+
+    #enter in contract
+    pk = tk.Label(root, text="Contract # of person")
+    pk.place(relx=0.25, rely=0.45, anchor='s')
+
+    txtVarba = tk.StringVar(root)
+    userInco = tk.Entry(root, textvariable=txtVarba, width=25)
+    userInco.place(relx=0.25, rely=0.45, anchor='n')
 
     #pk = tk.Label(root, text="Family ID")
     #pk.place(relx=0.75, rely=0.8, anchor='s')
@@ -134,7 +188,7 @@ def accountWindow(mainblock):
     tk.Button(
         root,
         text="Retrieve a family tree/persons info",
-        command=lambda: root.quit()
+        command=lambda: getfaminfo()
     ).place(relx=0.25, rely=0.5, anchor='n')
 
     tk.Button(

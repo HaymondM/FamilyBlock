@@ -62,7 +62,7 @@ class blockactions:
                               )["output"]["abi"]
         #self.w3 = Web3(Web3.HTTPProvider(self.address))
 
-    def adddata(self, Inna, Inag, Inda, Inba):
+    def adddata(self, Inna, Inag, Inda, Inba, Inco1, Inco2):
 
         #w3 = Web3(Web3.HTTPProvider(self.my_address))
         # create/build the contract
@@ -82,13 +82,15 @@ class blockactions:
         # wait for it to be recived
         tx_receipt = self.w3.eth.wait_for_transaction_receipt(tx_hash)
         print("Deployed!")
+        # Save contract ID for futurt
+        personcontract = tx_receipt.contractAddress
         # get contract address
         familyblock = self.w3.eth.contract(
             address=tx_receipt.contractAddress, abi=self.abi)
         # store the data
         # print(type(Inna))
         print("Updating contract...")
-        store_transaction = familyblock.functions.addPerson(Inna, Inag, Inda, Inba, nonce + 1).buildTransaction({
+        store_transaction = familyblock.functions.addPerson(Inna, Inag, Inda, Inba, nonce + 1, Inco1, Inco2).buildTransaction({
             "gasPrice": self.w3.eth.gas_price, "chainId": self.chainId,
             "from": self.my_address, "nonce": nonce + 1
         })
@@ -101,3 +103,32 @@ class blockactions:
             send_addperson_tx)
         print("Updated!")
         print(familyblock.functions.getTree().call())
+        return personcontract
+
+    def getdata(self, contractadd):
+        #w3 = Web3(Web3.HTTPProvider(self.my_address))
+        # create/build the contract
+        FamilyBlock = self.w3.eth.contract(
+            abi=self.abi, bytecode=self.bytecode)
+        nonce = self.w3.eth.getTransactionCount(self.my_address)
+        transaction = FamilyBlock.constructor().buildTransaction(
+            {"gasPrice": self.w3.eth.gas_price, "chainId": self.chainId,
+                "from": self.my_address, "nonce": nonce}
+        )
+        # sign
+        signed_txn = self.w3.eth.account.sign_transaction(
+            transaction, private_key=self.private_key)
+        # send
+        print("Deploying contract...")
+        tx_hash = self.w3.eth.send_raw_transaction(
+            signed_txn.rawTransaction)
+        # wait for it to be recived
+        tx_receipt = contractadd
+        print("Deployed!")
+        # Save contract ID for futurt
+        # print(tx_receipt.contractAddress)
+        # get contract address
+        familyblock = self.w3.eth.contract(
+            address=tx_receipt, abi=self.abi)
+        personinfo = familyblock.functions.getTree().call()
+        return personinfo
