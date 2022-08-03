@@ -137,14 +137,14 @@ def accountWindow(mainblock):
     userInba = tk.Entry(root, textvariable=txtVarba, width=50)
     userInba.place(relx=0.75, rely=0.65, anchor='n')
 
-    pk = tk.Label(root, text="Contract # of parent")
+    pk = tk.Label(root, text="Contract # of mom")
     pk.place(relx=0.75, rely=0.75, anchor='s')
 
     txtVarco1 = tk.StringVar(root)
     userInco1 = tk.Entry(root, textvariable=txtVarco1, width=50)
     userInco1.place(relx=0.75, rely=0.75, anchor='n')
 
-    pk = tk.Label(root, text="Contract # of parent")
+    pk = tk.Label(root, text="Contract # of dad")
     pk.place(relx=0.75, rely=0.85, anchor='s')
 
     txtVarco2 = tk.StringVar(root)

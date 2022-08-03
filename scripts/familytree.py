@@ -12,7 +12,7 @@ def familyTree(mainblock, mainperson, person2, person3,
                person4, person5, person6, person7):
 
     def disinfo(person):
-        disformat = f'{person[0][0]}\n {person[0][1]}\n{person[0][2]}\n{person[0][3]}\n'
+        disformat = f'Name: {person[0][0]}\n Age: {person[0][1]}\n Birth Year: {person[0][2]}\n Birhtplace: {person[0][3]}\n'
         return messagebox.showinfo('FamilyBlock', disformat)
 
     # Set Up Main window
@@ -97,24 +97,24 @@ def familyTree(mainblock, mainperson, person2, person3,
         root,
         text=p4text,
         command=lambda: disinfo(person4)
-    ).place(relx=0.55, rely=0.35, anchor='n')
-
-    tk.Button(
-        root,
-        text=p5text,
-        command=lambda: disinfo(person5)
-    ).place(relx=0.44, rely=0.35, anchor='n')
-
-    tk.Button(
-        root,
-        text=p6text,
-        command=lambda: disinfo(person6)
-    ).place(relx=0.24, rely=0.35, anchor='n')
+    ).place(relx=0.57, rely=0.35, anchor='n')
 
     tk.Button(
         root,
         text=p7text,
         command=lambda: disinfo(person7)
+    ).place(relx=0.4, rely=0.35, anchor='n')  # grandma dad
+
+    tk.Button(
+        root,
+        text=p6text,
+        command=lambda: disinfo(person6)
+    ).place(relx=0.2, rely=0.35, anchor='n')  # grandpa dad
+
+    tk.Button(
+        root,
+        text=p5text,
+        command=lambda: disinfo(person5)
     ).place(relx=0.74, rely=0.35, anchor='n')
 
     tk.Button(

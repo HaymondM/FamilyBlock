@@ -117,6 +117,12 @@ def openMainWindow():
     failWindow.iconbitmap('.\\assets\FamilyBlock.ico')
 
 
+aa = tk.Label(root, text="Welcome to Family Block. \n \n Please eneter the address of the local blockchain \n and have your account address and private key ready. \n Enter in family info and make sure to grab the contract numbers. \n Use a persons contract number to build a family tree!",
+              bg='#adbce6', fg='#000000')
+aa.config(font=('Helvetica bold', 15))
+aa.place(relx=0.5, rely=0.6,  anchor='s')
+
+
 # set up buttons
 # Create button for next text.
 button_connect = tk.Button(
